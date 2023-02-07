@@ -27,19 +27,24 @@ class Crypto(commands.Cog):
     def __init__(self,bot):
         self.bot=bot
 
-    @commands.command()
-    async def eth(self,ctx):
-        """donnes les informations principales sur l'ETH"""
-        embed=discord.Embed(title="Sample Embed", url="https://realdrewdata.medium.com/", description="This is an embed that will show how to build an embed and the different components", color=0x109319)
-        embed.set_author(name="RealDrewData", url="https://twitter.com/RealDrewData", icon_url="https://pbs.twimg.com/profile_images/1327036716226646017/ZuaMDdtm_400x400.jpg")
-        embed.set_thumbnail(url="https://i.imgur.com/axLm3p6.jpeg")
-        embed.add_field(name="Field 1 Title", value="This is the value for field 1. This is NOT an inline field.", inline=False)
-        embed.add_field(name="Field 2 Title", value="It is inline with Field 3", inline=True)
-        embed.add_field(name="Field 3 Title", value="It is inline with Field 2", inline=True)
-        embed.set_footer(text="This is the footer. It contains text at the bottom of the embed")
-        ctx.author.display_name
-        ctx.author.avatar_url
-        await ctx.send(content=None,embed=embed)
+    @commands.command(name="embeds")
+    async def example_embed(self, ctx):
+        """A simple command which showcases the use of embeds.
+        Have a play around and visit the Visualizer."""
+
+        embed = discord.Embed(title='Example Embed',
+                              description='Showcasing the use of Embeds...\nSee the visualizer for more info.',
+                              colour=0x98FB98)
+        embed.set_author(name='MysterialPy',
+                         url='https://gist.github.com/MysterialPy/public',
+                         icon_url='http://i.imgur.com/ko5A30P.png')
+        embed.set_image(url='https://cdn.discordapp.com/attachments/84319995256905728/252292324967710721/embed.png')
+
+        embed.add_field(name='Embed Visualizer', value='[Click Here!](https://leovoel.github.io/embed-visualizer/)')
+        embed.add_field(name='Command Invoker', value=ctx.author.mention)
+        embed.set_footer(text='Made in Python with discord.py@rewrite', icon_url='http://i.imgur.com/5BFecvA.png')
+
+        await ctx.send(content='**A simple Embed for discord.py@rewrite in cogs.**', embed=embed)
 
 
 
