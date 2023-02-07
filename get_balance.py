@@ -12,7 +12,7 @@ def eth_info():
 
     ID = api_response['coins'][0]['id']
     SYMBOL = api_response['coins'][0]['symbol']
-    IMG = api_response['coins'][0]['thumb']
+    IMG = api_response['coins'][0]['large']
     MARKET_RANK = api_response['coins'][0]['market_cap_rank']
 
     URL2 = 'https://api.coingecko.com/api/v3/simple/price?ids='+crypto + \
@@ -30,11 +30,14 @@ def eth_info():
 
     def taux(EUR_24h_CHANGE):
         if EUR_24h_CHANGE < 0:
-            return '🟥'
+            EUR_24h_CHANGE = "-"+str(EUR_24h_CHANGE)+'🟥'
+            return EUR_24h_CHANGE
         elif EUR_24h_CHANGE > 0:
-            return '🟩'
+            EUR_24h_CHANGE = "+"+str(EUR_24h_CHANGE)+'🟩'
+            return EUR_24h_CHANGE
+            
 
-    return([ID,SYMBOL,IMG,MARKET_RANK,EUR,str(EUR_24h_CHANGE)+taux(EUR_24h_CHANGE)])
+    return([ID,SYMBOL,IMG,MARKET_RANK,EUR,taux(EUR_24h_CHANGE)])
 
 def balance_eth(add):
     if (add == ""):
