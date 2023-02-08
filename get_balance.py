@@ -1,7 +1,7 @@
 import requests
 
 def eth_info():
-    crypto = "gifto"
+    crypto = "ethereum"
     URL = 'https://api.coingecko.com/api/v3/search?query='+crypto
     # print(URL)
     params = {

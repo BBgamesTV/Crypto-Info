@@ -85,7 +85,7 @@ class Auto_Embed_Info(commands.Cog):
 ```""",inline=True)
 
         embed.add_field(name="🌱 Difference 24H", value=f"""```ml
-Difference24h : {round(info[4]*(info[6]/100)),2}€\n1 {info[1]} valait {round(info[4]-round(info[4]*(info[6]/100),2)),2}€ h-24
+Difference24h : {round(info[4]*(info[6]/100),2)}€\n1 {info[1]} valait {round(info[4]-round(info[4]*(info[6]/100),2),2)}€ h-24
 ```""",inline=False)
 
         embed.add_field(name="🌐 Rang", value=f"""```ml
