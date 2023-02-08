@@ -72,6 +72,9 @@ class Auto_Embed_Info(commands.Cog):
         self.index += 1
         channel = bot.get_channel(1071188822676738059)
         info = eth_info()
+
+
+
         embed = discord.Embed(title=f"{info[1]} {info[0]}",color=0x4e11c0)
         embed.set_author(name='CryptoNews',url='https://github.com/BBgamesTV/ETH-Info',icon_url='https://cdn.discordapp.com/avatars/741610011536654409/3b042d2a45230cfa891816f914d24d37.png?size=1024')
         embed.add_field(name=f"🍇 Valeur de {info[0]}", value=f"""```ml
@@ -82,7 +85,7 @@ class Auto_Embed_Info(commands.Cog):
 ```""",inline=True)
 
         embed.add_field(name="🌱 Difference 24H", value=f"""```ml
-Difference24h : {round(info[4]*(info[6]/100),2)}€\n1 {info[1]} valait {round(info[4]-round(info[4]*(info[6]/100),2),2)}€ h-24
+Difference24h : {round(info[4]*(info[6]/100)),2}€\n1 {info[1]} valait {round(info[4]-round(info[4]*(info[6]/100),2)),2}€ h-24
 ```""",inline=False)
 
         embed.add_field(name="🌐 Rang", value=f"""```ml
@@ -92,7 +95,7 @@ Difference24h : {round(info[4]*(info[6]/100),2)}€\n1 {info[1]} valait {round(i
         embed.add_field(name="Plus d'infomartion ❔", value=f"""[📈 Clique Ici 📊](https://www.coingecko.com/fr/pièces/{info[0]})""",inline=False)
 
         embed.set_thumbnail(url=info[2])
-        embed.set_footer(text=f'Par Petit Prince#3575 | 📊{self.index} | {dt_string}', icon_url=info[2])
+        embed.set_footer(text=f'Par Petit Prince#3575 | 📊{self.index} | {dt_string}', icon_url=info[2])    
         await channel.send(content=None,embed=embed)
         print("📊 ",self.index," ",{info[0]}, {info[1]}, {info[3]}, {info[4]}, {info[5]}, {info[6]}," ",dt_string)
 
