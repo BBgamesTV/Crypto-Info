@@ -35,26 +35,25 @@ class Crypto(commands.Cog):
     @commands.command(name="balance")
     async def balance_info(self, ctx, adress):
         
-        """A simple command which showcases the use of embeds.
-        Have a play around and visit the Visualizer."""
-
+        """Recupére les ETH d'une wallet ETH UNIQUEMENT"""
+        
         info = balance_eth(adress)
-
-        embed = discord.Embed(title='Example Embed',description='Showcasing the use of Embeds...\nSee the visualizer for more info.',colour=0x4e11c0)
-        embed.set_author(name='CryptoNews',url='https://github.com/BBgamesTV/ETH-Info',icon_url='https://cdn.discordapp.com/avatars/741610011536654409/3b042d2a45230cfa891816f914d24d37.png?size=1024')
-        embed.add_field(name="Valeur", value=f"""```ml
-1 {info} = {info} € 
+        eth_price = eth_info()
+        
+        embed = discord.Embed(title=f"{adress}",description=f"""```
+1 ETH = {eth_price[4]} €
+```""",color=0x4e11c0)
+        embed.set_author(name='CryptoBalance',url='https://github.com/BBgamesTV/ETH-Info',icon_url='https://cdn.discordapp.com/avatars/741610011536654409/3b042d2a45230cfa891816f914d24d37.png?size=1024')
+        embed.add_field(name=f"Valeur en ETH", value=f"""```ml
+{info} 
 ```""")
-        embed.add_field(name="Performance 24H", value=f"""```ml
-{info} %
-```""",inline=True)
-        embed.add_field(name="Rang", value=f"""```ml
-{info} est #{info} dans le classement des capitalisation boursière relative
-```""",inline=False)
-        embed.set_thumbnail(url=info)
-        embed.set_footer(text='Par Petit Prince#3575', icon_url=info)
-
-        await ctx.send(content=f'**{info}**', embed=embed)
+        if type(info) != str:
+            embed.add_field(name=f"Valeur en EUR €", value=f"""```ml
+{round(info*eth_price[4],3)} €  
+```""")
+        embed.set_footer(text=f'Par Petit Prince#3575')
+        
+        await ctx.send(content=None,embed=embed)    
 
 class Auto_Embed_Info(commands.Cog):
     def __init__(self, bot):
@@ -67,28 +66,28 @@ class Auto_Embed_Info(commands.Cog):
 
     @tasks.loop(seconds=90.0)
     async def embed_info(self):
-        print(self.index)
         date = datetime.now()
         dt_string = date.strftime("%d/%m/%Y %H:%M:%S")
 
         self.index += 1
         channel = bot.get_channel(1071188822676738059)
         info = eth_info()
-        embed = discord.Embed(color=0x4e11c0)
+        embed = discord.Embed(title=f"{info[1]} {info[0]}",color=0x4e11c0)
         embed.set_author(name='CryptoNews',url='https://github.com/BBgamesTV/ETH-Info',icon_url='https://cdn.discordapp.com/avatars/741610011536654409/3b042d2a45230cfa891816f914d24d37.png?size=1024')
-        embed.add_field(name="Valeur", value=f"""```ml
+        embed.add_field(name=f"Valeur de {info[0]}", value=f"""```ml
 1 {info[1]} = {info[4]} € 
 ```""")
         embed.add_field(name="Performance 24H", value=f"""```ml
-{info[5]} %
+{info[5]} %\nDifference24h : {round(info[4]*(info[6]/100),2)}€\n{info[1]} = {info[4]-round(info[4]*(info[6]/100),2)}€
 ```""",inline=True)
+
         embed.add_field(name="Rang", value=f"""```ml
-{info[1]} est #{info[3]} dans le classement des capitalisation boursière relative
+{info[1]} est #{info[3]} dans le classement des capitalisation boursière
 ```""",inline=False)
         embed.set_thumbnail(url=info[2])
         embed.set_footer(text=f'Par Petit Prince#3575 | 📊{self.index} | {dt_string}', icon_url=info[2])
         await channel.send(content=None,embed=embed)
-        print("📊",self.index)
+        print("📊 ",self.index," ",{info[0]}, {info[1]}," ",dt_string)
 
     @embed_info.before_loop
     async def before_embed_info(self):
@@ -111,7 +110,7 @@ bot = commands.Bot(
 async def on_ready():
     print(f'🍃 --> {bot.user} (ID: {bot.user.id})')
     print('---------')
-    botactivity = discord.Activity(type=discord.ActivityType.competing,name="Sécuriser la blockchain🍀", large_image_url='https://www.kindpng.com/picc/m/290-2907032_court-quest-court-clipart-hd-png-download.png')
+    botactivity = discord.Activity(type=discord.ActivityType.watching,name="Sécuriser la blockchain🍀", large_image_url='https://www.kindpng.com/picc/m/290-2907032_court-quest-court-clipart-hd-png-download.png')
     await bot.change_presence(activity=botactivity, status=discord.Status.do_not_disturb)
     
 

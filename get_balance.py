@@ -30,6 +30,7 @@ def eth_info():
     EUR = api_response2[ID]['eur']
     EUR_24h_CHANGE = api_response2[ID]['eur_24h_change']
     EUR_24h_CHANGE = round(EUR_24h_CHANGE, 4)
+    PERF = EUR_24h_CHANGE
 
     def taux(EUR_24h_CHANGE):
         if EUR_24h_CHANGE < 0:
@@ -40,27 +41,31 @@ def eth_info():
             return EUR_24h_CHANGE
             
     
-    return([ID,SYMBOL,IMG,MARKET_RANK,EUR,taux(EUR_24h_CHANGE)])
+    return([ID,SYMBOL,IMG,MARKET_RANK,EUR,taux(EUR_24h_CHANGE),PERF])
 
 def balance_eth(add):
-    if (add == ""):
-        adress = "0x0c2f551EC57378818255e6BDaD07D80d0591A905"
-        adress2 = "0x0E289c0F014385A4734C7c3D72Bc4428bE8bb37b"
-        adress = requests.get("https://api.ethplorer.io/getAddressInfo/"+adress+"?apiKey=freekey")
-        adress2 = requests.get("https://api.ethplorer.io/getAddressInfo/"+adress2+"?apiKey=freekey")
-        json = adress.json()
-        json2 = adress2.json()
-        balance = json["ETH"]["balance"]
-        balance2 = json2["ETH"]["balance"]
-        balance = balance+balance2
-        return balance
-    else:
+    try: 
         adress = requests.get("https://api.ethplorer.io/getAddressInfo/"+add+"?apiKey=freekey")
+        print("📁 balance ETh de : ", add ," | status code -> ",adress.status_code)
+    except:
+        print("Erreur requete")
+    if adress.status_code == 406:
+            balance = "Erreur dans l'adresse du Wallet ETH, verifies que c'est la bonne !"
+            return balance
+    else:
         json = adress.json()
         balance = json["ETH"]["balance"]
         return balance
     
+adress = "0x0c2f551EC57378818255e6BDaD07D80d0591A905"
+adress2 = "0x0E289c0F014385A4734C7c3D72Bc4428bE8bb37b"
+adress = requests.get("https://api.ethplorer.io/getAddressInfo/"+adress+"?apiKey=freekey")
+adress2 = requests.get("https://api.ethplorer.io/getAddressInfo/"+adress2+"?apiKey=freekey")
+json = adress.json()
+json2 = adress2.json()
+balance = json["ETH"]["balance"]
+balance2 = json2["ETH"]["balance"]
+balance = balance+balance2
 
 
 print(eth_info())
-print(balance_eth("0x0c2f551EC57378818255e6BDaD07D80d0591A905"))
