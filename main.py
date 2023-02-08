@@ -3,6 +3,10 @@ import asyncio
 from discord.ext import tasks, commands
 from get_balance import *
 
+from datetime import datetime
+
+
+
 class Moderation(commands.Cog):
     def __init__(self,bot):
         self.bot=bot
@@ -27,30 +31,6 @@ class Crypto(commands.Cog):
 
     def __init__(self,bot):
         self.bot=bot
-
-    @commands.command(name="eth")
-    async def Eth_info(self, ctx):
-        
-        """A simple command which showcases the use of embeds.
-        Have a play around and visit the Visualizer."""
-
-        info = eth_info()
-
-        embed = discord.Embed(color=0x4e11c0)
-        embed.set_author(name='CryptoNews',url='https://github.com/BBgamesTV/ETH-Info',icon_url='https://cdn.discordapp.com/avatars/741610011536654409/3b042d2a45230cfa891816f914d24d37.png?size=1024')
-        embed.add_field(name="Valeur", value=f"""```ml
-1 {info[1]} = {info[4]} € 
-```""")
-        embed.add_field(name="Performance 24H", value=f"""```ml
-{info[5]} %
-```""",inline=True)
-        embed.add_field(name="Rang", value=f"""```ml
-{info[1]} est #{info[3]} dans le classement des capitalisation boursière relative
-```""",inline=False)
-        embed.set_thumbnail(url=info[2])
-        embed.set_footer(text='Par Petit Prince#3575', icon_url=info[2])
-
-        await ctx.send(content=f'**{info[0]}**', embed=embed)
 
     @commands.command(name="balance")
     async def balance_info(self, ctx, adress):
@@ -85,9 +65,12 @@ class Auto_Embed_Info(commands.Cog):
     def cog_unload(self):
         self.embed_info.cancel()
 
-    @tasks.loop(seconds=60.0)
+    @tasks.loop(seconds=90.0)
     async def embed_info(self):
         print(self.index)
+        date = datetime.now()
+        dt_string = date.strftime("%d/%m/%Y %H:%M:%S")
+
         self.index += 1
         channel = bot.get_channel(1071188822676738059)
         info = eth_info()
@@ -103,8 +86,9 @@ class Auto_Embed_Info(commands.Cog):
 {info[1]} est #{info[3]} dans le classement des capitalisation boursière relative
 ```""",inline=False)
         embed.set_thumbnail(url=info[2])
-        embed.set_footer(text='Par Petit Prince#3575', icon_url=info[2])
-        await channel.send(content=self.index,embed=embed)
+        embed.set_footer(text=f'Par Petit Prince#3575 | 📊{self.index} | {dt_string}', icon_url=info[2])
+        await channel.send(content=None,embed=embed)
+        print("📊",self.index)
 
     @embed_info.before_loop
     async def before_embed_info(self):
