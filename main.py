@@ -78,8 +78,12 @@ class Auto_Embed_Info(commands.Cog):
 1 {info[1]} = {info[4]} € 
 ```""")
         embed.add_field(name="Performance 24H", value=f"""```ml
-{info[5]} %\nDifference24h : {round(info[4]*(info[6]/100),2)}€\n{info[1]} = {info[4]-round(info[4]*(info[6]/100),2)}€
+{info[5]} %
 ```""",inline=True)
+
+        embed.add_field(name="Difference 24H", value=f"""```ml
+Difference24h : {round(info[4]*(info[6]/100),2)}€\n1 {info[1]} valait {round(info[4]-round(info[4]*(info[6]/100),2),2)}€ h-24
+```""",inline=False)
 
         embed.add_field(name="Rang", value=f"""```ml
 {info[1]} est #{info[3]} dans le classement des capitalisation boursière
@@ -110,7 +114,7 @@ bot = commands.Bot(
 async def on_ready():
     print(f'🍃 --> {bot.user} (ID: {bot.user.id})')
     print('---------')
-    botactivity = discord.Activity(type=discord.ActivityType.watching,name="Sécuriser la blockchain🍀", large_image_url='https://www.kindpng.com/picc/m/290-2907032_court-quest-court-clipart-hd-png-download.png')
+    botactivity = discord.Activity(type=discord.ActivityType.watching,name="la blockchain🍀", large_image_url='https://www.kindpng.com/picc/m/290-2907032_court-quest-court-clipart-hd-png-download.png')
     await bot.change_presence(activity=botactivity, status=discord.Status.do_not_disturb)
     
 
