@@ -1,7 +1,12 @@
 import requests
+import time
 
+<<<<<<< Updated upstream
 def eth_info():
     crypto = "ethereum"
+=======
+def eth_info(crypto):
+>>>>>>> Stashed changes
     URL = 'https://api.coingecko.com/api/v3/search?query='+crypto
     # print(URL)
     params = {
@@ -24,7 +29,7 @@ def eth_info():
     api_result_market = requests.get(URL2, params)
     api_response2 = api_result_market.json()
     if api_response == "error":
-        print("CRYPTO ERROR")
+        print("API Dead statut")
         exit
 
     EUR = api_response2[ID]['eur']
@@ -44,6 +49,7 @@ def eth_info():
     return([ID,SYMBOL,IMG,MARKET_RANK,EUR,taux(EUR_24h_CHANGE),PERF])
 
 def balance_eth(add):
+<<<<<<< Updated upstream
     try: 
         adress = requests.get("https://api.ethplorer.io/getAddressInfo/"+add+"?apiKey=freekey")
         print("📁 balance ETh de : ", add ," | status code -> ",adress.status_code)
@@ -56,6 +62,12 @@ def balance_eth(add):
         json = adress.json()
         balance = json["ETH"]["balance"]
         return balance
+=======
+    adress = requests.get("https://api.ethplorer.io/getAddressInfo/"+add+"?apiKey=freekey")
+    json = adress.json()
+    balance = json["ETH"]["balance"]
+    return balance
+>>>>>>> Stashed changes
     
 adress = "0x0c2f551EC57378818255e6BDaD07D80d0591A905"
 adress2 = "0x0E289c0F014385A4734C7c3D72Bc4428bE8bb37b"
@@ -68,4 +80,15 @@ balance2 = json2["ETH"]["balance"]
 balance = balance+balance2
 
 
+<<<<<<< Updated upstream
 print(eth_info())
+=======
+print(eth_info("axie"))
+print(eth_info("cosmos"))
+time.sleep(2)
+print(eth_info("algorand"))
+print(eth_info("ethereum"))
+time.sleep(3)
+print(eth_info("bitcoin"))
+print(balance_eth("0x0c2f551EC57378818255e6BDaD07D80d0591A905"))
+>>>>>>> Stashed changes
