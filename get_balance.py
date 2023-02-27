@@ -51,7 +51,7 @@ def balance_eth(add):
     
 
 
-print(eth_info())
+""" 
 print(eth_info("axie"))
 print(eth_info("cosmos"))
 time.sleep(2)
@@ -60,3 +60,4 @@ print(eth_info("ethereum"))
 time.sleep(3)
 print(eth_info("bitcoin"))
 print(balance_eth("0x0c2f551EC57378818255e6BDaD07D80d0591A905"))
+"""
