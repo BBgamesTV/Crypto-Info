@@ -130,6 +130,6 @@ async def main():
         await bot.add_cog(Moderation(bot))
         await bot.add_cog(Crypto(bot))
         await bot.add_cog(Auto_Embed_Info(bot))
-        await bot.start("NzQxNjEwMDExNTM2NjU0NDA5.GxAYO7.rF3MwBkXKmCqBp0gCIbFaePVdcSWwFUDn8S2BQ")
+        await bot.start("TOKEN")
 
 asyncio.run(main())
